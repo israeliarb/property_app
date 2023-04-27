@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:property_app/controllers/item_controller.dart';
-import 'package:property_app/models/item_model.dart';
 
 class ItemPage extends StatefulWidget {
+  const ItemPage({super.key});
+
   @override
   _ItemPageState createState() => _ItemPageState();
 }
@@ -18,7 +18,7 @@ class _ItemPageState extends State<ItemPage> {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

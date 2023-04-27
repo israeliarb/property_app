@@ -3,11 +3,13 @@ class ItemModel {
   final String name;
   final String model;
   final String serial;
+  final String category;
   final String type;
   final String conservation;
   final String nfe;
+  final String nfeDate;
   final String responsibleId;
-  final String responsibleName;
+  String responsibleName;
   final String createdAt;
   final String updatedAt;
   final bool active;
@@ -17,9 +19,11 @@ class ItemModel {
     required this.name,
     required this.model,
     required this.serial,
+    required this.category,
     required this.type,
     required this.conservation,
     required this.nfe,
+    required this.nfeDate,
     required this.responsibleId,
     required this.responsibleName,
     required this.createdAt,

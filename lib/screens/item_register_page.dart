@@ -9,24 +9,28 @@ import 'package:property_app/controllers/item_controller.dart';
 import 'package:intl/intl.dart';
 
 class ItemRegisterPage extends StatefulWidget {
+  const ItemRegisterPage({super.key});
+
   @override
   State<ItemRegisterPage> createState() => _ItemRegisterPageState();
 }
 
 class _ItemRegisterPageState extends State<ItemRegisterPage> {
   //Text controllers
-  String _itemId = ' ';
+  final String _itemId = ' ';
   final _nameController = TextEditingController();
   final _modelController = TextEditingController();
   final _serialController = TextEditingController();
+  final _categoryController = TextEditingController();
   final _typeController = TextEditingController();
   final _conservationController = TextEditingController();
   final _nfeController = TextEditingController();
-  String _responsibleId = ' ';
-  String _responsibleName = ' Sem responsável ';
-  String _createdAt = ' ';
-  String _updatedAt = ' ';
-  bool _active = true;
+  final _nfeDateController = TextEditingController();
+  final String _responsibleId = ' ';
+  final String _responsibleName = ' Sem responsável ';
+  final String _createdAt = ' ';
+  final String _updatedAt = ' ';
+  final bool _active = true;
 
   bool showErrorMessage = false;
 
@@ -35,17 +39,63 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
     _nameController.dispose();
     _modelController.dispose();
     _serialController.dispose();
-    _typeController.dispose();
+    _categoryController.dispose();
     _conservationController.dispose();
+    _typeController.dispose();
+    _nfeController.dispose();
+    _nfeDateController.dispose();
     super.dispose();
   }
+
+  final Map<String, List<String>> categoryToTypes = {
+    'Móveis e utensílios': [
+      'Armário',
+      'Baias',
+      'Cadeira',
+      'Balcão',
+      'Hack',
+      'Mesa',
+      'Microondas',
+      'Móveis Planejados',
+      'Móvel Bar',
+      'Sofás',
+      'Ar Condicionado'
+    ],
+    'Equipamentos de informática': [
+      'Monitor',
+      'Cpu',
+      'Celular',
+      'Tablet',
+      'Nobreak',
+      'Estabilizador',
+      'Impressora',
+      'Notebook',
+      'Macbook',
+      'Televisão',
+      'Retoprojetor',
+      'NETTOP',
+      'Microcomputador',
+      'Mini projetor',
+      'Controlador de Acesso Biométrico',
+      'Leitor Laser'
+    ],
+    'Bens de pequeno valor': [
+      'Mouse',
+      'Teclado',
+      'Headset',
+      'Fones de ouvido',
+      'Cabos',
+      'Fonte de alimentação'
+    ],
+    'Veículos': ['Onix', 'Tracker'],
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColor.customBlack,
       appBar: AppBar(
-        title: Text('Registro de itens'),
+        title: const Text('Registro de itens'),
       ),
       body: SafeArea(
         child: Center(
@@ -159,7 +209,55 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
 
               const SizedBox(height: SpacingSizes.md_16),
 
-              //Type Dropdown
+              // Category Dropdown
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: CustomSizes.size_45),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: CustomColor.customDarkGrey,
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 12.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: CustomColor.customLightGrey),
+                      borderRadius:
+                          BorderRadius.circular(CustomBorderRadius.md_12),
+                    ),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String?>(
+                      value: _categoryController.text.isNotEmpty
+                          ? _categoryController.text
+                          : null,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _categoryController.text = newValue!;
+                          // Limpa o tipo atual ao mudar a categoria
+                          _typeController.text = '';
+                        });
+                      },
+                      items: [
+                        DropdownMenuItem<String>(
+                          value: null,
+                          child: Text('Selecione a categoria do item'),
+                        ),
+                        ...categoryToTypes.keys.map((category) {
+                          return DropdownMenuItem<String>(
+                            value: category,
+                            child: Text(category),
+                          );
+                        }).toList(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: SpacingSizes.md_16),
+
+              // Type Dropdown
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: CustomSizes.size_45),
@@ -186,20 +284,26 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                           _typeController.text = newValue!;
                         });
                       },
-                      items: [
-                        DropdownMenuItem<String>(
-                          value: null,
-                          child: Text('Selecione o tipo do item'),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'Computador',
-                          child: Text('Computador'),
-                        ),
-                        DropdownMenuItem<String>(
-                          value: 'Notebook',
-                          child: Text('Notebook'),
-                        ),
-                      ],
+                      items: _categoryController.text.isNotEmpty
+                          ? [
+                              DropdownMenuItem<String>(
+                                value: null,
+                                child: Text('Selecione o tipo do item'),
+                              ),
+                              ...categoryToTypes[_categoryController.text]!
+                                  .map((type) {
+                                return DropdownMenuItem<String>(
+                                  value: type,
+                                  child: Text(type),
+                                );
+                              }).toList(),
+                            ]
+                          : [
+                              DropdownMenuItem<String>(
+                                value: null,
+                                child: Text('Selecione a categoria primeiro'),
+                              ),
+                            ],
                     ),
                   ),
                 ),
@@ -234,7 +338,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                           _conservationController.text = newValue!;
                         });
                       },
-                      items: [
+                      items: const [
                         DropdownMenuItem<String>(
                           value: null,
                           child: Text('Selecione o estado de conserva'),
@@ -291,6 +395,38 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
 
               const SizedBox(height: SpacingSizes.md_16),
 
+              //NF-E Date TextField
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: CustomSizes.size_45),
+                child: TextField(
+                  controller: _nfeDateController,
+                  style: const TextStyle(color: CustomColor.customWhite),
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: CustomColor.customLightGrey),
+                      borderRadius:
+                          BorderRadius.circular(CustomBorderRadius.md_12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: CustomColor.customBlue),
+                      borderRadius:
+                          BorderRadius.circular(CustomBorderRadius.md_12),
+                    ),
+                    hintStyle: const TextStyle(color: CustomColor.customWhite),
+                    hintText: 'Data de Emissão da NFe',
+                    filled: true,
+                    fillColor: CustomColor.customDarkGrey,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 12.0),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: SpacingSizes.md_16),
+
               //Save button
               Padding(
                 padding:
@@ -300,6 +436,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                     if ((_nameController.text.trim() != "") &&
                         (_modelController.text.trim() != "") &&
                         (_serialController.text.trim() != "") &&
+                        (_categoryController.text.trim() != "") &&
                         (_typeController.text.trim() != "") &&
                         (_conservationController.text.trim() != "") &&
                         (_nfeController.text.trim() != "")) {
@@ -311,9 +448,11 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                         _nameController.text.trim(),
                         _modelController.text.trim(),
                         _serialController.text.trim(),
+                        _categoryController.text.trim(),
                         _typeController.text.trim(),
                         _conservationController.text.trim(),
                         _nfeController.text.trim(),
+                        _nfeDateController.text.trim(),
                         _responsibleId,
                         _responsibleName,
                         formattedDate, // assign formatted timestamp to _createdAt
@@ -326,13 +465,13 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(
+                            title: const Text(
                               "Erro ao salvar o item",
                               style: TextStyle(
                                 fontSize: FontSize.l,
                               ),
                             ),
-                            content: Text(
+                            content: const Text(
                               "Todos os campos devem ser preenchidos",
                               style: TextStyle(
                                 fontSize: FontSize.sm,
@@ -343,7 +482,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("Ok"),
+                                child: const Text("Ok"),
                               )
                             ],
                           );

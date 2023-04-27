@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserRegisterPage()),
+                MaterialPageRoute(builder: (context) => const UserRegisterPage()),
               );
             },
             color: CustomColor.customBlue,
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ItemRegisterPage()),
+                MaterialPageRoute(builder: (context) => const ItemRegisterPage()),
               );
             },
             color: CustomColor.customBlue,
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ItemListPage()),
+                MaterialPageRoute(builder: (context) => const ItemListPage()),
               );
             },
             color: CustomColor.customBlue,

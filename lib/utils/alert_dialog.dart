@@ -4,7 +4,7 @@ class MyAlertDialog extends StatelessWidget {
   final String title;
   final String content;
 
-  const MyAlertDialog({required this.title, required this.content});
+  const MyAlertDialog({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class MyAlertDialog extends StatelessWidget {
       content: Text(content),
       actions: <Widget>[
         TextButton(
-          child: Text('Confirmar'),
+          child: const Text('Confirmar'),
           onPressed: () {
             Navigator.of(context).pop();
           },

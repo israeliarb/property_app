@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (contex) {
-                            return PasswordRecoveryPage();
+                            return const PasswordRecoveryPage();
                           }),
                         );
                       },

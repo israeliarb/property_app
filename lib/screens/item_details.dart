@@ -5,7 +5,7 @@ import 'package:property_app/models/item_model.dart';
 class ItemDetailsScreen extends StatefulWidget {
   final String itemId;
 
-  const ItemDetailsScreen({required this.itemId});
+  const ItemDetailsScreen({super.key, required this.itemId});
 
   @override
   _ItemDetailsScreenState createState() => _ItemDetailsScreenState();
@@ -31,23 +31,25 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   Widget build(BuildContext context) {
     if (_item == null) {
       // exibe um indicador de carregamento enquanto os dados são buscados do Firebase
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     // exibe os dados do item
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalhes do Item'),
+        title: const Text('Detalhes do Item'),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         children: [
           Text('Nome: ${_item.name}'),
           Text('Modelo: ${_item.model}'),
           Text('Serial: ${_item.serial}'),
+          Text('Category: ${_item.category}'),
           Text('Tipo: ${_item.type}'),
           Text('Conservação: ${_item.conservation}'),
           Text('Nota fiscal: ${_item.nfe}'),
+          Text('Data de emissão da NFe: ${_item.nfeDate}'),
           Text('Responsável: ${_item.responsibleName}'),
         ],
       ),

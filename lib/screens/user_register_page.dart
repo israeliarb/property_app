@@ -20,10 +20,10 @@ class UserRegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<UserRegisterPage> {
   //Text controllers
-  String _userId = ' ';
+  final String _userId = ' ';
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  String _passwordController = 'mudar@123';
+  final String _passwordController = 'mudar@123';
   final _registrationController = TextEditingController();
   final _roleController = TextEditingController();
   final _departmentController = TextEditingController();
@@ -44,7 +44,7 @@ class _RegisterPageState extends State<UserRegisterPage> {
     return Scaffold(
       backgroundColor: CustomColor.customBlack,
       appBar: AppBar(
-        title: Text('Cadastro de usuários'),
+        title: const Text('Cadastro de usuários'),
       ),
       body: SafeArea(
         child: Center(
@@ -275,13 +275,13 @@ class _RegisterPageState extends State<UserRegisterPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(
+                            title: const Text(
                               "Erro ao salvar o colaborador",
                               style: TextStyle(
                                 fontSize: FontSize.l,
                               ),
                             ),
-                            content: Text(
+                            content: const Text(
                               "Todos os campos devem ser preenchidos",
                               style: TextStyle(
                                 fontSize: FontSize.sm,
@@ -292,7 +292,7 @@ class _RegisterPageState extends State<UserRegisterPage> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("Ok"),
+                                child: const Text("Ok"),
                               )
                             ],
                           );

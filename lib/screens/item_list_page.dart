@@ -11,6 +11,8 @@ import 'package:property_app/screens/item_details.dart';
 import 'package:property_app/screens/item_register_page.dart';
 
 class ItemListPage extends StatefulWidget {
+  const ItemListPage({super.key});
+
   @override
   _ItemListPageState createState() => _ItemListPageState();
 }
@@ -64,7 +66,7 @@ class _ItemListPageState extends State<ItemListPage> {
                               }
                               return Column(
                                 children: snapshot.data!.docs.map((documents) {
-                                  return Container(
+                                  return SizedBox(
                                     height: CustomSizes.size_50,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -98,7 +100,7 @@ class _ItemListPageState extends State<ItemListPage> {
 
                 const SizedBox(height: SpacingSizes.l_32),
 
-                //Save button
+                //Add item button
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: CustomSizes.size_45),
@@ -107,7 +109,7 @@ class _ItemListPageState extends State<ItemListPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ItemRegisterPage()),
+                            builder: (context) => const ItemRegisterPage()),
                       );
                     },
                     child: Container(

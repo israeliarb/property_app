@@ -30,7 +30,7 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             content:
                 Text('Link para recuperação da senha foi enviado ao email'),
           );
@@ -102,8 +102,8 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
 
           MaterialButton(
             onPressed: passwordReset,
-            child: Text('Solicitar link para reset de senha'),
             color: CustomColor.customBlue,
+            child: const Text('Solicitar link para reset de senha'),
           )
         ],
       ),
