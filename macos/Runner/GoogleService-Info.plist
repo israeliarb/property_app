@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>983289004509-flklog45ppil01cuhg6570qlf7vr7i2h.apps.googleusercontent.com</string>
+	<string>58059103944-t3c4vak0geetf91d1b0pdguvaaq0fdrr.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.983289004509-flklog45ppil01cuhg6570qlf7vr7i2h</string>
+	<string>com.googleusercontent.apps.58059103944-t3c4vak0geetf91d1b0pdguvaaq0fdrr</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDVLR5zhi4kMi76Qo4y_bgc9VZm6tA1aLs</string>
+	<string>AIzaSyAjye_TWEkgOc-_jdNy4_Ch8DL1J_7V8qo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>983289004509</string>
+	<string>58059103944</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.propertyApp.RunnerTests</string>
+	<string>br.com.tempo.PropertyApp</string>
 	<key>PROJECT_ID</key>
-	<string>propertyapp-77dc8</string>
+	<string>tempo-property-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>propertyapp-77dc8.appspot.com</string>
+	<string>tempo-property-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:983289004509:ios:becb114f6e1c366b413634</string>
+	<string>1:58059103944:ios:f021e02e6fbc9265958ffd</string>
 </dict>
 </plist>
