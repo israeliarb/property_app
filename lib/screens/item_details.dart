@@ -4,7 +4,6 @@ import 'package:property_app/controllers/item_controller.dart';
 import 'package:property_app/models/item_model.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
-import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
   final String itemId;
@@ -52,8 +51,18 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
         'Tipo: ${_item.type}\n'
         'Conservação: ${_item.conservation}\n'
         'Nota fiscal: ${_item.nfe}\n'
+        'Data de emissão da NFe: ${_item.nfeDate}';
+
+    // converte os dados do item em uma string (Função com responsável e dados da NFe)
+    /*String itemDetails = 'Nome: ${_item.name}\n'
+        'Modelo: ${_item.model}\n'
+        'Serial: ${_item.serial}\n'
+        'Categoria: ${_item.category}\n'
+        'Tipo: ${_item.type}\n'
+        'Conservação: ${_item.conservation}\n'
+        'Nota fiscal: ${_item.nfe}\n'
         'Data de emissão da NFe: ${_item.nfeDate}\n'
-        'Responsável: ${_item.responsibleName}';
+        'Responsável: ${_item.responsibleName}';*/
 
     // exibe os dados do item e um botão para copiar para a área de transferência
     return Scaffold(

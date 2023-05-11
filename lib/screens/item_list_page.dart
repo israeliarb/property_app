@@ -8,7 +8,9 @@ import 'package:property_app/constants/font_size.dart';
 import 'package:property_app/constants/spacing_sizes.dart';
 import 'package:property_app/screens/assign_page.dart';
 import 'package:property_app/screens/item_details.dart';
+import 'package:property_app/screens/item_edit_page.dart';
 import 'package:property_app/screens/item_register_page.dart';
+import 'package:property_app/screens/items_report.dart';
 
 class ItemListPage extends StatefulWidget {
   const ItemListPage({super.key});
@@ -134,8 +136,99 @@ class _ItemListPageState extends State<ItemListPage> {
 
                 const SizedBox(height: SpacingSizes.l_32),
 
-                //Change responsible button
+                //Item edit button
                 Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: CustomSizes.size_45),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (selectedItem == null) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Item não selecionado'),
+                              content: const Text(
+                                  'Por favor, selecione um item antes de prosseguir.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ItemEditPage(itemId: selectedItem!),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(CustomSizes.size_15),
+                      decoration: BoxDecoration(
+                        color: CustomColor.customBlue,
+                        borderRadius:
+                            BorderRadius.circular(CustomBorderRadius.md_12),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Editar item',
+                          style: TextStyle(
+                            color: CustomColor.customWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: FontSize.md,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: SpacingSizes.l_32),
+
+                //Itens report button
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: CustomSizes.size_45),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ItemsReport()),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(CustomSizes.size_15),
+                      decoration: BoxDecoration(
+                          color: CustomColor.customBlue,
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12)),
+                      child: const Center(
+                        child: Text(
+                          'Relatório de itens',
+                          style: TextStyle(
+                            color: CustomColor.customWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: FontSize.md,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: SpacingSizes.l_32),
+
+                //Change responsible button
+                /*Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: CustomSizes.size_45),
                   child: GestureDetector(
@@ -190,9 +283,9 @@ class _ItemListPageState extends State<ItemListPage> {
                   ),
                 ),
 
-                const SizedBox(height: SpacingSizes.l_32),
+                const SizedBox(height: SpacingSizes.l_32),*/
 
-                //Save button
+                //Item details button
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: CustomSizes.size_45),
@@ -236,7 +329,7 @@ class _ItemListPageState extends State<ItemListPage> {
                       ),
                       child: const Center(
                         child: Text(
-                          'Gerar relatório do item',
+                          'Detalhes do item',
                           style: TextStyle(
                             color: CustomColor.customWhite,
                             fontWeight: FontWeight.bold,
@@ -251,7 +344,7 @@ class _ItemListPageState extends State<ItemListPage> {
                 const SizedBox(height: SpacingSizes.l_32),
 
                 //Save button
-                Padding(
+                /*Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: CustomSizes.size_45),
                   child: GestureDetector(
@@ -274,7 +367,7 @@ class _ItemListPageState extends State<ItemListPage> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
 
                 const SizedBox(height: SpacingSizes.xxl_64),
 

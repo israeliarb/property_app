@@ -114,9 +114,40 @@ Future<ItemModel> getItem(String itemId) async {
   return item;
 }
 
-void updateItem(String itemId, String newResponsibleName) async {
+void updateItemResponsible(String itemId, String newResponsibleName) async {
   await FirebaseFirestore.instance
       .collection('itens')
       .doc(itemId)
       .update({'responsibleName': newResponsibleName});
+}
+
+void updateItem(
+  String itemId,
+  String name,
+  String model,
+  String serial,
+  String category,
+  String type,
+  String conservation,
+  String nfe,
+  String nfeDate,
+  String responsibleId,
+  String responsibleName,
+  String updatedAt,
+  bool active,
+) async {
+  await FirebaseFirestore.instance.collection('itens').doc(itemId).update({
+    'name': name,
+    'model': model,
+    'serial': serial,
+    'category': category,
+    'type': type,
+    'conservation': conservation,
+    'nfe': nfe,
+    'nfeDate': nfeDate,
+    'responsibleId': responsibleId,
+    'responsibleName': responsibleName,
+    'updatedAt': updatedAt,
+    'active': active,
+  });
 }
