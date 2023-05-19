@@ -51,7 +51,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
         'Tipo: ${_item.type}\n'
         'Conservação: ${_item.conservation}\n'
         'Nota fiscal: ${_item.nfe}\n'
-        'Data de emissão da NFe: ${_item.nfeDate}';
+        'Data de emissão da NFe: ${_item.nfeDate}\n'
+        'ID: ${_item.id}';
 
     // converte os dados do item em uma string (Função com responsável e dados da NFe)
     /*String itemDetails = 'Nome: ${_item.name}\n'

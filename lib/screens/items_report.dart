@@ -71,7 +71,10 @@ class _ItemsReportState extends State<ItemsReport> {
                   Text('Modelo: ${item.model}'),
                   Text('Número de Série: ${item.serial}'),
                   Text('Categoria: ${item.category}'),
-                  // Adicione os campos restantes aqui
+                  Text('Tipo: ${item.type}'),
+                  Text('Conservação: ${item.conservation}'),
+                  Text('NFe: ${item.nfe}'),
+                  Text('Responsável: ${item.responsibleName}'),
                 ],
               ),
             ),

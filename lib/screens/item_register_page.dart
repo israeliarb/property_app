@@ -77,7 +77,15 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
       'Microcomputador',
       'Mini projetor',
       'Controlador de Acesso Biométrico',
-      'Leitor Laser'
+      'Leitor Laser',
+      'Wireless',
+      'HD Externo',
+      'Interfone',
+      'Broadcast',
+      'Sensor Kinect',
+      'Chipeira',
+      'Switch',
+      'DVR'
     ],
     'Bens de pequeno valor': [
       'Mouse',
