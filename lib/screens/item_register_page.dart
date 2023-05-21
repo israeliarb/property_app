@@ -85,7 +85,8 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
       'Sensor Kinect',
       'Chipeira',
       'Switch',
-      'DVR'
+      'DVR',
+      'Chaveador'
     ],
     'Bens de pequeno valor': [
       'Mouse',
