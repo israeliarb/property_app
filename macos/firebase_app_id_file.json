@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:58059103944:ios:7974012fa4a25aef958ffd",
-  "FIREBASE_PROJECT_ID": "tempo-property-app",
-  "GCM_SENDER_ID": "58059103944"
+  "GOOGLE_APP_ID": "1:983289004509:ios:becb114f6e1c366b413634",
+  "FIREBASE_PROJECT_ID": "propertyapp-77dc8",
+  "GCM_SENDER_ID": "983289004509"
 }
