@@ -1,6 +1,10 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:property_app/main.dart';
 import 'package:property_app/models/item_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 Future addItem(
   String id,
@@ -16,6 +20,7 @@ Future addItem(
   String responsibleName,
   String createdAt,
   String updatedAt,
+  String imageUrl,
   bool active,
 ) async {
   ItemModel newItem = ItemModel(
@@ -32,6 +37,7 @@ Future addItem(
     responsibleName: responsibleName,
     createdAt: createdAt,
     updatedAt: updatedAt,
+    imageUrl: imageUrl,
     active: active,
   );
 
@@ -59,6 +65,7 @@ void addItemDetails(ItemModel item) async {
     'responsibleName': item.responsibleName,
     'createdAt': item.createdAt,
     'updatedAt': item.updatedAt,
+    'imageUrl': item.imageUrl,
     'active': item.active,
   });
 }
@@ -84,6 +91,7 @@ Future<List<ItemModel>> getItensList() async {
       responsibleName: doc['responsibleName'],
       createdAt: doc['createdAt'],
       updatedAt: doc['updatedAt'],
+      imageUrl: doc['imageUrl'],
       active: doc['active'],
     ));
   }
@@ -109,6 +117,7 @@ Future<ItemModel> getItem(String itemId) async {
       responsibleName: snapshot['responsibleName'],
       createdAt: snapshot['createdAt'],
       updatedAt: snapshot['updatedAt'],
+      imageUrl: snapshot['imageUrl'],
       active: snapshot['active']);
 
   return item;
@@ -134,6 +143,7 @@ void updateItem(
   String responsibleId,
   String responsibleName,
   String updatedAt,
+  String imageUrl,
   bool active,
 ) async {
   await FirebaseFirestore.instance.collection('itens').doc(itemId).update({
@@ -148,6 +158,7 @@ void updateItem(
     'responsibleId': responsibleId,
     'responsibleName': responsibleName,
     'updatedAt': updatedAt,
+    'imageUrl': imageUrl,
     'active': active,
   });
 }

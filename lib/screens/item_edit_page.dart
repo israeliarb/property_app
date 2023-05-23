@@ -47,6 +47,7 @@ class _ItemEditPageState extends State<ItemEditPage> {
   final String _responsibleName = ' Sem responsável ';
   final String _createdAt = ' ';
   final String _updatedAt = ' ';
+  final String _imageUrl = ' ';
   final bool _active = true;
 
   bool showErrorMessage = false;
@@ -471,6 +472,14 @@ class _ItemEditPageState extends State<ItemEditPage> {
 
                     const SizedBox(height: SpacingSizes.md_16),
 
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.image),
+                      color: Colors.white,
+                    ),
+
+                    const SizedBox(height: SpacingSizes.md_16),
+
                     //Save button
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -502,6 +511,7 @@ class _ItemEditPageState extends State<ItemEditPage> {
                               _responsibleId,
                               _responsibleName,
                               formattedDate,
+                              _imageUrl,
                               _active,
                             );
                             Navigator.popUntil(

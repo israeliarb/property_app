@@ -30,6 +30,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
   final String _responsibleName = ' Sem responsável ';
   final String _createdAt = ' ';
   final String _updatedAt = ' ';
+  final String _imageUrl = ' ';
   final bool _active = true;
 
   bool showErrorMessage = false;
@@ -466,6 +467,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                         _responsibleName,
                         formattedDate, // assign formatted timestamp to _createdAt
                         formattedDate,
+                        _imageUrl,
                         _active,
                       );
                       Navigator.popUntil(context, ModalRoute.withName('/'));

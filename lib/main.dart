@@ -13,13 +13,13 @@ final fb = FirebaseStorage.instance;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    //options: DefaultFirebaseOptions.currentPlatform,
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyBAEearXiaoAI5n5NYBcHSZgPrgjRdicOc",
-      appId: "1:58059103944:web:ce11e00b123b86d0958ffd",
-      messagingSenderId: "58059103944",
-      projectId: "tempo-property-app",
-    ),
+    options: DefaultFirebaseOptions.currentPlatform,
+    // options: const FirebaseOptions(
+    //   apiKey: "AIzaSyBAEearXiaoAI5n5NYBcHSZgPrgjRdicOc",
+    //   appId: "1:58059103944:web:ce11e00b123b86d0958ffd",
+    //   messagingSenderId: "58059103944",
+    //   projectId: "tempo-property-app",
+    // ),
   );
   runApp(const MyApp());
 }
