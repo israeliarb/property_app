@@ -92,7 +92,8 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
       'DVR',
       'Chaveador',
       'Patch Panel',
-      'Fragmentadora'
+      'Fragmentadora',
+      'Leitor biométrico'
     ],
     'Bens de pequeno valor': [
       'Mouse',

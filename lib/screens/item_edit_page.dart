@@ -109,7 +109,8 @@ class _ItemEditPageState extends State<ItemEditPage> {
       'DVR',
       'Chaveador',
       'Patch Panel',
-      'Fragmentadora'
+      'Fragmentadora',
+      'Leitor biométrico'
     ],
     'Bens de pequeno valor': [
       'Mouse',
