@@ -8,6 +8,7 @@ import 'package:property_app/constants/spacing_sizes.dart';
 import 'package:property_app/controllers/item_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:property_app/models/item_model.dart';
+import 'package:property_app/utils/image_overlay.dart';
 
 class ItemEditPage extends StatefulWidget {
   final String itemId;
@@ -476,6 +477,42 @@ class _ItemEditPageState extends State<ItemEditPage> {
                       onPressed: () {},
                       icon: Icon(Icons.image),
                       color: Colors.white,
+                    ),
+
+                    //Photo
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: CustomSizes.size_25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Anexar imagem',
+                            style: TextStyle(
+                              color: CustomColor.customWhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: FontSize.l,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              //selectImage();
+                              showOverlay(context);
+                            },
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.all(CustomSizes.size_15),
+                              decoration: BoxDecoration(
+                                  color: CustomColor.customBlack,
+                                  borderRadius: BorderRadius.circular(
+                                      CustomBorderRadius.md_12)),
+                              child: const Center(
+                                child: Icon(Icons.image),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
 
                     const SizedBox(height: SpacingSizes.md_16),

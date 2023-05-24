@@ -6,6 +6,10 @@ import 'package:property_app/main.dart';
 import 'package:property_app/models/item_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+final ImagePicker _imagePicker = ImagePicker();
+XFile? image;
+String id = ' ';
+
 Future addItem(
   String id,
   String name,
@@ -161,4 +165,40 @@ void updateItem(
     'imageUrl': imageUrl,
     'active': active,
   });
+
+  id = itemId;
+
+  uploadImage(image!);
+}
+
+selectImage() async {
+  var status = await Permission.storage.request();
+  const compress = 30;
+  if (status.isGranted) {
+    image = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: compress,
+    );
+    return image;
+  }
+}
+
+Future<void> uploadImage(XFile image) async {
+  //Create reference foi firebase storage
+  final docRef = db.collection('itens').doc(id);
+  File imageFile = File(image.path);
+  Reference reference = fb.ref(imageFile.path);
+
+  //Upload image from galery
+  try {
+    UploadTask uploadTask = reference.putFile(imageFile);
+
+    final storageSnapshot = uploadTask.snapshot;
+
+    final imageUrl = await storageSnapshot.ref.getDownloadURL();
+
+    await docRef.update({'imageUrl': imageUrl});
+  } on FirebaseException catch (e) {
+    throw Exception('Erro no upload: ${e.code}');
+  }
 }
