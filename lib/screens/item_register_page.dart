@@ -59,7 +59,10 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
       'Móveis Planejados',
       'Móvel Bar',
       'Sofás',
-      'Ar Condicionado'
+      'Ar Condicionado',
+      'Base de Metal',
+      'Tampo de granito',
+      'Criado mudo'
     ],
     'Equipamentos de informática': [
       'Monitor',
@@ -86,7 +89,9 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
       'Chipeira',
       'Switch',
       'DVR',
-      'Chaveador'
+      'Chaveador',
+      'Patch Panel',
+      'Fragmentadora'
     ],
     'Bens de pequeno valor': [
       'Mouse',
@@ -94,9 +99,13 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
       'Headset',
       'Fones de ouvido',
       'Cabos',
-      'Fonte de alimentação'
+      'Fonte de alimentação',
+      'Fonte POE 24V 1A',
+      'Suporte pedestal',
+      'Claviculário',
+      'Bandeja porta cápsula de café'
     ],
-    'Veículos': ['Onix', 'Tracker'],
+    'Veículos': ['Onix', 'Tracker', 'Versa'],
   };
 
   @override

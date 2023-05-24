@@ -7,10 +7,8 @@ import 'package:property_app/screens/item_list_page.dart';
 import 'package:property_app/screens/user_register_page.dart';
 import 'package:property_app/screens/item_list_page.dart' show ItemListPage;
 
-//User currentUser = FirebaseAuth.instance.currentUser!;
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,56 +20,87 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Logado como: ${currentUser.email}'),
-          MaterialButton(
+      appBar: AppBar(
+        title: Text('Home Page'),
+        backgroundColor: CustomColor.customBlue,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (contex) {
+                MaterialPageRoute(builder: (context) {
                   return const MainPage();
                 }),
               );
             },
-            color: CustomColor.customBlue,
-            child: const Text('Sair'),
-          ),
-          MaterialButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const UserRegisterPage()),
-              );
-            },
-            color: CustomColor.customBlue,
-            child: const Text('User'),
-          ),
-          MaterialButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ItemRegisterPage()),
-              );
-            },
-            color: CustomColor.customBlue,
-            child: const Text('Item'),
-          ),
-          MaterialButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ItemListPage()),
-              );
-            },
-            color: CustomColor.customBlue,
-            child: const Text('Lista Itens'),
           ),
         ],
-      )),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Logado como: ${currentUser.email}'),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UserRegisterPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColor.customBlue,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('UsuÃ¡rio', style: TextStyle(fontSize: 18)),
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ItemRegisterPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColor.customBlue,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('Item', style: TextStyle(fontSize: 18)),
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ItemListPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColor.customBlue,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('Lista de Itens',
+                    style: TextStyle(fontSize: 18)),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -76,7 +76,10 @@ class _ItemEditPageState extends State<ItemEditPage> {
       'Móveis Planejados',
       'Móvel Bar',
       'Sofás',
-      'Ar Condicionado'
+      'Ar Condicionado',
+      'Base de Metal',
+      'Tampo de granito',
+      'Criado mudo'
     ],
     'Equipamentos de informática': [
       'Monitor',
@@ -94,7 +97,18 @@ class _ItemEditPageState extends State<ItemEditPage> {
       'Microcomputador',
       'Mini projetor',
       'Controlador de Acesso Biométrico',
-      'Leitor Laser'
+      'Leitor Laser',
+      'Wireless',
+      'HD Externo',
+      'Interfone',
+      'Broadcast',
+      'Sensor Kinect',
+      'Chipeira',
+      'Switch',
+      'DVR',
+      'Chaveador',
+      'Patch Panel',
+      'Fragmentadora'
     ],
     'Bens de pequeno valor': [
       'Mouse',
@@ -102,9 +116,13 @@ class _ItemEditPageState extends State<ItemEditPage> {
       'Headset',
       'Fones de ouvido',
       'Cabos',
-      'Fonte de alimentação'
+      'Fonte de alimentação',
+      'Fonte POE 24V 1A',
+      'Suporte pedestal',
+      'Claviculário',
+      'Bandeja porta cápsula de café'
     ],
-    'Veículos': ['Onix', 'Tracker'],
+    'Veículos': ['Onix', 'Tracker', 'Versa'],
   };
 
   @override

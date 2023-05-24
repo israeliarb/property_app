@@ -36,7 +36,7 @@ class _ItemsReportState extends State<ItemsReport> {
                   final ItemModel? item = itens?[index];
                   return InkWell(
                     onTap: () {
-                      _showItemDetails(context, item!);
+                      _showItemDetails(context, item);
                     },
                     child: ListTile(
                       title: Text(item!.name),
