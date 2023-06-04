@@ -24,7 +24,6 @@ Future addItem(
   String responsibleName,
   String createdAt,
   String updatedAt,
-  String imageUrl,
   bool active,
 ) async {
   ItemModel newItem = ItemModel(
@@ -41,7 +40,6 @@ Future addItem(
     responsibleName: responsibleName,
     createdAt: createdAt,
     updatedAt: updatedAt,
-    imageUrl: imageUrl,
     active: active,
   );
 
@@ -69,7 +67,6 @@ void addItemDetails(ItemModel item) async {
     'responsibleName': item.responsibleName,
     'createdAt': item.createdAt,
     'updatedAt': item.updatedAt,
-    'imageUrl': item.imageUrl,
     'active': item.active,
   });
 }
@@ -95,7 +92,6 @@ Future<List<ItemModel>> getItensList() async {
       responsibleName: doc['responsibleName'],
       createdAt: doc['createdAt'],
       updatedAt: doc['updatedAt'],
-      imageUrl: doc['imageUrl'],
       active: doc['active'],
     ));
   }
@@ -121,7 +117,6 @@ Future<ItemModel> getItem(String itemId) async {
       responsibleName: snapshot['responsibleName'],
       createdAt: snapshot['createdAt'],
       updatedAt: snapshot['updatedAt'],
-      imageUrl: snapshot['imageUrl'],
       active: snapshot['active']);
 
   return item;
@@ -147,7 +142,6 @@ void updateItem(
   String responsibleId,
   String responsibleName,
   String updatedAt,
-  String imageUrl,
   bool active,
 ) async {
   await FirebaseFirestore.instance.collection('itens').doc(itemId).update({
@@ -162,13 +156,12 @@ void updateItem(
     'responsibleId': responsibleId,
     'responsibleName': responsibleName,
     'updatedAt': updatedAt,
-    'imageUrl': imageUrl,
     'active': active,
   });
 
   id = itemId;
 
-  uploadImage(image!);
+  //uploadImage(image!);
 }
 
 selectImage() async {

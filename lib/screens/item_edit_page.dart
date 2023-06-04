@@ -8,6 +8,7 @@ import 'package:property_app/constants/spacing_sizes.dart';
 import 'package:property_app/controllers/item_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:property_app/models/item_model.dart';
+import 'package:property_app/utils/category_types.dart';
 
 class ItemEditPage extends StatefulWidget {
   final String itemId;
@@ -47,7 +48,6 @@ class _ItemEditPageState extends State<ItemEditPage> {
   final String _responsibleName = ' Sem responsável ';
   final String _createdAt = ' ';
   final String _updatedAt = ' ';
-  final String _imageUrl = ' ';
   final bool _active = true;
 
   bool showErrorMessage = false;
@@ -65,67 +65,7 @@ class _ItemEditPageState extends State<ItemEditPage> {
     super.dispose();
   }
 
-  final Map<String, List<String>> categoryToTypes = {
-    'Móveis e utensílios': [
-      'Armário',
-      'Baias',
-      'Cadeira',
-      'Balcão',
-      'Hack',
-      'Mesa',
-      'Microondas',
-      'Móveis Planejados',
-      'Móvel Bar',
-      'Sofás',
-      'Ar Condicionado',
-      'Base de Metal',
-      'Tampo de granito',
-      'Criado mudo'
-    ],
-    'Equipamentos de informática': [
-      'Monitor',
-      'Cpu',
-      'Celular',
-      'Tablet',
-      'Nobreak',
-      'Estabilizador',
-      'Impressora',
-      'Notebook',
-      'Macbook',
-      'Televisão',
-      'Retoprojetor',
-      'NETTOP',
-      'Microcomputador',
-      'Mini projetor',
-      'Controlador de Acesso Biométrico',
-      'Leitor Laser',
-      'Wireless',
-      'HD Externo',
-      'Interfone',
-      'Broadcast',
-      'Sensor Kinect',
-      'Chipeira',
-      'Switch',
-      'DVR',
-      'Chaveador',
-      'Patch Panel',
-      'Fragmentadora',
-      'Leitor biométrico'
-    ],
-    'Bens de pequeno valor': [
-      'Mouse',
-      'Teclado',
-      'Headset',
-      'Fones de ouvido',
-      'Cabos',
-      'Fonte de alimentação',
-      'Fonte POE 24V 1A',
-      'Suporte pedestal',
-      'Claviculário',
-      'Bandeja porta cápsula de café'
-    ],
-    'Veículos': ['Onix', 'Tracker', 'Versa'],
-  };
+  final Map<String, List<String>> category = categoryToTypes;
 
   @override
   Widget build(BuildContext context) {
@@ -522,7 +462,6 @@ class _ItemEditPageState extends State<ItemEditPage> {
                               _responsibleId,
                               _responsibleName,
                               formattedDate,
-                              _imageUrl,
                               _active,
                             );
                             Navigator.popUntil(

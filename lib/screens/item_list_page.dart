@@ -9,6 +9,7 @@ import 'package:property_app/constants/spacing_sizes.dart';
 import 'package:property_app/screens/assign_page.dart';
 import 'package:property_app/screens/item_details.dart';
 import 'package:property_app/screens/item_edit_page.dart';
+import 'package:property_app/screens/item_images.dart';
 import 'package:property_app/screens/item_register_page.dart';
 import 'package:property_app/screens/items_report.dart';
 
@@ -343,6 +344,64 @@ class _ItemListPageState extends State<ItemListPage> {
 
                 const SizedBox(height: SpacingSizes.l_32),
 
+                //Item images button
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: CustomSizes.size_45),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (selectedItem == null) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Item não selecionado'),
+                              content: const Text(
+                                  'Por favor, selecione um item antes de prosseguir.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ItemImagesScreen(itemId: selectedItem!),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(CustomSizes.size_15),
+                      decoration: BoxDecoration(
+                        color: CustomColor.customBlue,
+                        borderRadius:
+                            BorderRadius.circular(CustomBorderRadius.md_12),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Imagens do item',
+                          style: TextStyle(
+                            color: CustomColor.customWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: FontSize.md,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: SpacingSizes.l_32),
+
                 //Save button
                 /*Padding(
                   padding: const EdgeInsets.symmetric(
@@ -368,43 +427,6 @@ class _ItemListPageState extends State<ItemListPage> {
                     ),
                   ),
                 ),*/
-
-                const SizedBox(height: SpacingSizes.xxl_64),
-
-                //Cancel button
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: CustomSizes.size_45),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (contex) {
-                          return const MainPage();
-                        }),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(CustomSizes.size_15),
-                      decoration: BoxDecoration(
-                          color: CustomColor.customRed,
-                          borderRadius:
-                              BorderRadius.circular(CustomBorderRadius.md_12)),
-                      child: const Center(
-                        child: Text(
-                          'Voltar',
-                          style: TextStyle(
-                            color: CustomColor.customWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: FontSize.md,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: SpacingSizes.l_32),
               ],
             ),
           ),

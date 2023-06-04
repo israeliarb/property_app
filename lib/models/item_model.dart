@@ -12,7 +12,6 @@ class ItemModel {
   String responsibleName;
   final String createdAt;
   final String updatedAt;
-  final String imageUrl;
   final bool active;
 
   ItemModel({
@@ -29,7 +28,6 @@ class ItemModel {
     required this.responsibleName,
     required this.createdAt,
     required this.updatedAt,
-    required this.imageUrl,
     required this.active,
   });
 }

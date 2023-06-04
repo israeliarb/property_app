@@ -6,16 +6,16 @@ import 'package:property_app/models/item_model.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 
-class ItemDetailsScreen extends StatefulWidget {
+class ItemImagesScreen extends StatefulWidget {
   final String itemId;
 
-  const ItemDetailsScreen({super.key, required this.itemId});
+  const ItemImagesScreen({super.key, required this.itemId});
 
   @override
   _ItemDetailsScreenState createState() => _ItemDetailsScreenState();
 }
 
-class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
+class _ItemDetailsScreenState extends State<ItemImagesScreen> {
   late ItemModel _item;
 
   @override
@@ -87,20 +87,18 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                 Text('Data de emissão da NFe: ${_item.nfeDate}'),
                 Text('Responsável: ${_item.responsibleName}'),
                 const SizedBox(height: 16.0),
-                Container(
-                  color: CustomColor.customWhite,
-                  child: Center(
-                    child: QrImage(
-                      data: itemDetails,
-                      version: QrVersions.auto,
-                      size: 200.0,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.image_search_rounded),
+                      onPressed: () => pickAndUploadImage(widget.itemId),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () => _copyToClipboard(itemDetails),
-                  child: const Text('Copiar para a Área de Transferência'),
+                    IconButton(
+                      icon: const Icon(Icons.camera_enhance_rounded),
+                      onPressed: () => pickAndUploadImage(widget.itemId),
+                    ),
+                  ],
                 ),
               ],
             ),
