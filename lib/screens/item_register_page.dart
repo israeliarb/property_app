@@ -7,6 +7,7 @@ import 'package:property_app/constants/font_size.dart';
 import 'package:property_app/constants/spacing_sizes.dart';
 import 'package:property_app/controllers/item_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:property_app/utils/category_types.dart';
 
 class ItemRegisterPage extends StatefulWidget {
   const ItemRegisterPage({super.key});
@@ -47,67 +48,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
     super.dispose();
   }
 
-  final Map<String, List<String>> categoryToTypes = {
-    'Móveis e utensílios': [
-      'Armário',
-      'Baias',
-      'Cadeira',
-      'Balcão',
-      'Hack',
-      'Mesa',
-      'Microondas',
-      'Móveis Planejados',
-      'Móvel Bar',
-      'Sofás',
-      'Ar Condicionado',
-      'Base de Metal',
-      'Tampo de granito',
-      'Criado mudo'
-    ],
-    'Equipamentos de informática': [
-      'Monitor',
-      'Cpu',
-      'Celular',
-      'Tablet',
-      'Nobreak',
-      'Estabilizador',
-      'Impressora',
-      'Notebook',
-      'Macbook',
-      'Televisão',
-      'Retoprojetor',
-      'NETTOP',
-      'Microcomputador',
-      'Mini projetor',
-      'Controlador de Acesso Biométrico',
-      'Leitor Laser',
-      'Wireless',
-      'HD Externo',
-      'Interfone',
-      'Broadcast',
-      'Sensor Kinect',
-      'Chipeira',
-      'Switch',
-      'DVR',
-      'Chaveador',
-      'Patch Panel',
-      'Fragmentadora',
-      'Leitor biométrico'
-    ],
-    'Bens de pequeno valor': [
-      'Mouse',
-      'Teclado',
-      'Headset',
-      'Fones de ouvido',
-      'Cabos',
-      'Fonte de alimentação',
-      'Fonte POE 24V 1A',
-      'Suporte pedestal',
-      'Claviculário',
-      'Bandeja porta cápsula de café'
-    ],
-    'Veículos': ['Onix', 'Tracker', 'Versa'],
-  };
+  final Map<String, List<String>> category = categoryToTypes;
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +203,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                           value: null,
                           child: Text('Selecione a categoria do item'),
                         ),
-                        ...categoryToTypes.keys.map((category) {
+                        ...category.keys.map((category) {
                           return DropdownMenuItem<String>(
                             value: category,
                             child: Text(category),
@@ -309,7 +250,7 @@ class _ItemRegisterPageState extends State<ItemRegisterPage> {
                                 value: null,
                                 child: Text('Selecione o tipo do item'),
                               ),
-                              ...categoryToTypes[_categoryController.text]!
+                              ...category[_categoryController.text]!
                                   .map((type) {
                                 return DropdownMenuItem<String>(
                                   value: type,
