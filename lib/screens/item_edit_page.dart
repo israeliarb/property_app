@@ -73,6 +73,7 @@ class _ItemEditPageState extends State<ItemEditPage> {
       return Scaffold(
         backgroundColor: CustomColor.customBlack,
         appBar: AppBar(
+          backgroundColor: CustomColor.customBlue,
           title: const Text('Registro de itens'),
         ),
         body: Center(
@@ -91,468 +92,455 @@ class _ItemEditPageState extends State<ItemEditPage> {
       return Scaffold(
         backgroundColor: CustomColor.customBlack,
         appBar: AppBar(
+          backgroundColor: CustomColor.customBlue,
           title: const Text('Registro de itens'),
         ),
         body: SafeArea(
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: SpacingSizes.md_16),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: SpacingSizes.md_16),
 
-                    const Text(
-                      'Faça o cadastro do item abaixo',
-                      style: TextStyle(
-                        fontSize: FontSize.l,
+                  const Text(
+                    'Faça o cadastro do item abaixo',
+                    style: TextStyle(
+                      fontSize: FontSize.l,
+                    ),
+                  ),
+
+                  const SizedBox(height: SpacingSizes.l_32),
+
+                  //Name TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: TextField(
+                      controller: _nameController,
+                      style: const TextStyle(color: CustomColor.customWhite),
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: CustomColor.customBlue),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        hintStyle:
+                            const TextStyle(color: CustomColor.customWhite),
+                        hintText: 'Nome',
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 12.0),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(height: SpacingSizes.l_32),
+                  const SizedBox(height: SpacingSizes.md_16),
 
-                    //Name TextField
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: TextField(
-                        controller: _nameController,
-                        style: const TextStyle(color: CustomColor.customWhite),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: CustomColor.customBlue),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          hintStyle:
-                              const TextStyle(color: CustomColor.customWhite),
-                          hintText: 'Nome',
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 12.0),
+                  //Model TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: TextField(
+                      controller: _modelController,
+                      style: const TextStyle(color: CustomColor.customWhite),
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: CustomColor.customBlue),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        hintStyle:
+                            const TextStyle(color: CustomColor.customWhite),
+                        hintText: 'Modelo',
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 12.0),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(height: SpacingSizes.md_16),
+                  const SizedBox(height: SpacingSizes.md_16),
 
-                    //Model TextField
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: TextField(
-                        controller: _modelController,
-                        style: const TextStyle(color: CustomColor.customWhite),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: CustomColor.customBlue),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          hintStyle:
-                              const TextStyle(color: CustomColor.customWhite),
-                          hintText: 'Modelo',
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 12.0),
+                  //Serial TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: TextField(
+                      controller: _serialController,
+                      style: const TextStyle(color: CustomColor.customWhite),
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: CustomColor.customBlue),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        hintStyle:
+                            const TextStyle(color: CustomColor.customWhite),
+                        hintText: 'Codigo de Série',
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 12.0),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(height: SpacingSizes.md_16),
+                  const SizedBox(height: SpacingSizes.md_16),
 
-                    //Serial TextField
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: TextField(
-                        controller: _serialController,
-                        style: const TextStyle(color: CustomColor.customWhite),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: CustomColor.customBlue),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          hintStyle:
-                              const TextStyle(color: CustomColor.customWhite),
-                          hintText: 'Codigo de Série',
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 12.0),
+                  // Category Dropdown
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 12.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
                         ),
                       ),
-                    ),
-
-                    const SizedBox(height: SpacingSizes.md_16),
-
-                    // Category Dropdown
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 12.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String?>(
-                            value: _categoryController.text.isNotEmpty
-                                ? _categoryController.text
-                                : null,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _categoryController.text = newValue!;
-                                // Limpa o tipo atual ao mudar a categoria
-                                _typeController.text = '';
-                              });
-                            },
-                            items: [
-                              DropdownMenuItem<String>(
-                                value: null,
-                                child: Text('Selecione a categoria do item'),
-                              ),
-                              ...categoryToTypes.keys.map((category) {
-                                return DropdownMenuItem<String>(
-                                  value: category,
-                                  child: Text(category),
-                                );
-                              }).toList(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: SpacingSizes.md_16),
-
-                    // Type Dropdown
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 12.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String?>(
-                            value: _typeController.text.isNotEmpty
-                                ? _typeController.text
-                                : null,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _typeController.text = newValue!;
-                              });
-                            },
-                            items: _categoryController.text.isNotEmpty
-                                ? [
-                                    DropdownMenuItem<String>(
-                                      value: null,
-                                      child: Text('Selecione o tipo do item'),
-                                    ),
-                                    ...categoryToTypes[
-                                            _categoryController.text]!
-                                        .map((type) {
-                                      return DropdownMenuItem<String>(
-                                        value: type,
-                                        child: Text(type),
-                                      );
-                                    }).toList(),
-                                  ]
-                                : [
-                                    DropdownMenuItem<String>(
-                                      value: null,
-                                      child: Text(
-                                          'Selecione a categoria primeiro'),
-                                    ),
-                                  ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: SpacingSizes.md_16),
-
-                    //Conservation TextField
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 12.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String?>(
-                            value: _conservationController.text.isNotEmpty
-                                ? _conservationController.text
-                                : null,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _conservationController.text = newValue!;
-                              });
-                            },
-                            items: const [
-                              DropdownMenuItem<String>(
-                                value: null,
-                                child: Text('Selecione o estado de conserva'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Novo',
-                                child: Text('Novo'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Seminovo',
-                                child: Text('Seminovo'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Usado',
-                                child: Text('Usado'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: SpacingSizes.md_16),
-
-                    //NF-E TextField
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: TextField(
-                        controller: _nfeController,
-                        style: const TextStyle(color: CustomColor.customWhite),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: CustomColor.customBlue),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          hintStyle:
-                              const TextStyle(color: CustomColor.customWhite),
-                          hintText: 'Nota Fiscal',
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 12.0),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: SpacingSizes.md_16),
-
-                    //NF-E Date TextField
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: TextField(
-                        controller: _nfeDateController,
-                        style: const TextStyle(color: CustomColor.customWhite),
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: CustomColor.customLightGrey),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: CustomColor.customBlue),
-                            borderRadius:
-                                BorderRadius.circular(CustomBorderRadius.md_12),
-                          ),
-                          hintStyle:
-                              const TextStyle(color: CustomColor.customWhite),
-                          hintText: 'Data de Emissão da NFe',
-                          filled: true,
-                          fillColor: CustomColor.customDarkGrey,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 12.0),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: SpacingSizes.md_16),
-
-                    //Save button
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: GestureDetector(
-                        onTap: () {
-                          if ((_nameController.text.trim() != "") &&
-                              (_modelController.text.trim() != "") &&
-                              (_serialController.text.trim() != "") &&
-                              (_categoryController.text.trim() != "") &&
-                              (_typeController.text.trim() != "") &&
-                              (_conservationController.text.trim() != "") &&
-                              (_nfeController.text.trim() != "")) {
-                            DateTime now =
-                                DateTime.now(); // get current timestamp
-                            String formattedDate =
-                                DateFormat('yyyy-MM-dd HH:mm:ss')
-                                    .format(now); // format timestamp as string
-                            updateItem(
-                              _item.id,
-                              _nameController.text.trim(),
-                              _modelController.text.trim(),
-                              _serialController.text.trim(),
-                              _categoryController.text.trim(),
-                              _typeController.text.trim(),
-                              _conservationController.text.trim(),
-                              _nfeController.text.trim(),
-                              _nfeDateController.text.trim(),
-                              _responsibleId,
-                              _responsibleName,
-                              formattedDate,
-                              _active,
-                            );
-                            Navigator.popUntil(
-                                context, ModalRoute.withName('/'));
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text(
-                                    "Erro ao salvar o item",
-                                    style: TextStyle(
-                                      fontSize: FontSize.l,
-                                    ),
-                                  ),
-                                  content: const Text(
-                                    "Todos os campos devem ser preenchidos",
-                                    style: TextStyle(
-                                      fontSize: FontSize.sm,
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("Ok"),
-                                    )
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(CustomSizes.size_15),
-                          decoration: BoxDecoration(
-                              color: CustomColor.customBlue,
-                              borderRadius: BorderRadius.circular(
-                                  CustomBorderRadius.md_12)),
-                          child: const Center(
-                            child: Text(
-                              'Salvar',
-                              style: TextStyle(
-                                color: CustomColor.customWhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: FontSize.md,
-                              ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String?>(
+                          value: _categoryController.text.isNotEmpty
+                              ? _categoryController.text
+                              : null,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _categoryController.text = newValue!;
+                              // Limpa o tipo atual ao mudar a categoria
+                              _typeController.text = '';
+                            });
+                          },
+                          items: [
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: Text('Selecione a categoria do item'),
                             ),
-                          ),
+                            ...categoryToTypes.keys.map((category) {
+                              return DropdownMenuItem<String>(
+                                value: category,
+                                child: Text(category),
+                              );
+                            }).toList(),
+                          ],
                         ),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(height: SpacingSizes.md_16),
+                  const SizedBox(height: SpacingSizes.md_16),
 
-                    //Cancel button
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: CustomSizes.size_45),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (contex) {
-                              return const MainPage();
-                            }),
+                  // Type Dropdown
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 12.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String?>(
+                          value: _typeController.text.isNotEmpty
+                              ? _typeController.text
+                              : null,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _typeController.text = newValue!;
+                            });
+                          },
+                          items: _categoryController.text.isNotEmpty
+                              ? [
+                                  DropdownMenuItem<String>(
+                                    value: null,
+                                    child: Text('Selecione o tipo do item'),
+                                  ),
+                                  ...categoryToTypes[_categoryController.text]!
+                                      .map((type) {
+                                    return DropdownMenuItem<String>(
+                                      value: type,
+                                      child: Text(type),
+                                    );
+                                  }).toList(),
+                                ]
+                              : [
+                                  DropdownMenuItem<String>(
+                                    value: null,
+                                    child:
+                                        Text('Selecione a categoria primeiro'),
+                                  ),
+                                ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: SpacingSizes.md_16),
+
+                  //Conservation TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 12.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String?>(
+                          value: _conservationController.text.isNotEmpty
+                              ? _conservationController.text
+                              : null,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _conservationController.text = newValue!;
+                            });
+                          },
+                          items: const [
+                            DropdownMenuItem<String>(
+                              value: null,
+                              child: Text('Selecione o estado de conserva'),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: 'Novo',
+                              child: Text('Novo'),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: 'Seminovo',
+                              child: Text('Seminovo'),
+                            ),
+                            DropdownMenuItem<String>(
+                              value: 'Usado',
+                              child: Text('Usado'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: SpacingSizes.md_16),
+
+                  //NF-E TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: TextField(
+                      controller: _nfeController,
+                      style: const TextStyle(color: CustomColor.customWhite),
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: CustomColor.customBlue),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        hintStyle:
+                            const TextStyle(color: CustomColor.customWhite),
+                        hintText: 'Nota Fiscal',
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 12.0),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: SpacingSizes.md_16),
+
+                  //NF-E Date TextField
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: CustomSizes.size_45),
+                    child: TextField(
+                      controller: _nfeDateController,
+                      style: const TextStyle(color: CustomColor.customWhite),
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: CustomColor.customLightGrey),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: CustomColor.customBlue),
+                          borderRadius:
+                              BorderRadius.circular(CustomBorderRadius.md_12),
+                        ),
+                        hintStyle:
+                            const TextStyle(color: CustomColor.customWhite),
+                        hintText: 'Data de Emissão da NFe',
+                        filled: true,
+                        fillColor: CustomColor.customDarkGrey,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 12.0),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: SpacingSizes.md_16),
+
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if ((_nameController.text.trim() != "") &&
+                            (_modelController.text.trim() != "") &&
+                            (_serialController.text.trim() != "") &&
+                            (_categoryController.text.trim() != "") &&
+                            (_typeController.text.trim() != "") &&
+                            (_conservationController.text.trim() != "") &&
+                            (_nfeController.text.trim() != "")) {
+                          DateTime now =
+                              DateTime.now(); // get current timestamp
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd HH:mm:ss')
+                                  .format(now); // format timestamp as string
+                          addItem(
+                            _itemId,
+                            _nameController.text.trim(),
+                            _modelController.text.trim(),
+                            _serialController.text.trim(),
+                            _categoryController.text.trim(),
+                            _typeController.text.trim(),
+                            _conservationController.text.trim(),
+                            _nfeController.text.trim(),
+                            _nfeDateController.text.trim(),
+                            _responsibleId,
+                            _responsibleName,
+                            formattedDate, // assign formatted timestamp to _createdAt
+                            formattedDate,
+                            _active,
                           );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(CustomSizes.size_15),
-                          decoration: BoxDecoration(
-                              color: CustomColor.customRed,
-                              borderRadius: BorderRadius.circular(
-                                  CustomBorderRadius.md_12)),
-                          child: const Center(
-                            child: Text(
-                              'Cancelar',
-                              style: TextStyle(
-                                color: CustomColor.customWhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: FontSize.md,
-                              ),
-                            ),
-                          ),
+                          Navigator.popUntil(context, ModalRoute.withName('/'));
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  "Erro ao salvar o item",
+                                  style: TextStyle(
+                                    fontSize: FontSize.l,
+                                  ),
+                                ),
+                                content: const Text(
+                                  "Todos os campos devem ser preenchidos",
+                                  style: TextStyle(
+                                    fontSize: FontSize.sm,
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Ok"),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: CustomColor.customBlue,
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: const Text(
+                        'Salvar',
+                        style: TextStyle(
+                          color: CustomColor.customWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: FontSize.md,
                         ),
                       ),
                     ),
+                  ),
 
-                    const SizedBox(height: SpacingSizes.l_32),
-                  ]),
+                  const SizedBox(height: SpacingSizes.md_16),
+
+                  SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return const MainPage();
+                          }),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: CustomColor.customRed,
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: const Text(
+                        'Cancelar',
+                        style: TextStyle(
+                          color: CustomColor.customWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: FontSize.md,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: SpacingSizes.l_32),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:property_app/constants/colors.dart';
 import 'package:property_app/controllers/item_controller.dart';
 import 'package:property_app/models/item_model.dart';
 
@@ -20,6 +21,7 @@ class _ItemsReportState extends State<ItemsReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomColor.customBlue,
         title: Text('Itens'),
         actions: [],
       ),

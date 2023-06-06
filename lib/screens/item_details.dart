@@ -69,6 +69,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     // exibe os dados do item e um botão para copiar para a área de transferência
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomColor.customBlue,
         title: const Text('Detalhes do Item'),
       ),
       body: Column(
