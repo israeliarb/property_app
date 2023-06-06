@@ -39,3 +39,20 @@ pickAndUploadImage(String itemId) async {
     await upload(file.path, itemId);
   }
 }
+
+Future<List<String>> getItemImages(String itemId) async {
+  List<String> imageUrls = [];
+
+  try {
+    ListResult listResult = await fb.ref('images/$itemId').listAll();
+
+    for (Reference ref in listResult.items) {
+      String downloadUrl = await ref.getDownloadURL();
+      imageUrls.add(downloadUrl);
+    }
+  } catch (e) {
+    print('Erro ao recuperar as imagens: $e');
+  }
+
+  return imageUrls;
+}

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:property_app/auth/main_page.dart';
 import 'package:property_app/constants/colors.dart';
-import 'package:property_app/screens/item_register_page.dart';
+import 'package:property_app/screens/item_insert_page.dart';
 import 'package:property_app/screens/item_list_page.dart';
 import 'package:property_app/screens/user_register_page.dart';
 import 'package:property_app/screens/item_list_page.dart' show ItemListPage;

@@ -1,108 +1,210 @@
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:property_app/constants/colors.dart';
 import 'package:property_app/controllers/image_controller.dart';
-import 'package:property_app/controllers/item_controller.dart';
-import 'package:property_app/models/item_model.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter/services.dart';
+import 'package:property_app/main.dart';
 
 class ItemImagesScreen extends StatefulWidget {
   final String itemId;
 
-  const ItemImagesScreen({super.key, required this.itemId});
+  const ItemImagesScreen({Key? key, required this.itemId}) : super(key: key);
 
   @override
-  _ItemDetailsScreenState createState() => _ItemDetailsScreenState();
+  _ItemImagesScreenState createState() => _ItemImagesScreenState();
 }
 
-class _ItemDetailsScreenState extends State<ItemImagesScreen> {
-  late ItemModel _item;
+class _ItemImagesScreenState extends State<ItemImagesScreen> {
+  List<String> _imagePaths = [];
+  bool _uploading = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchItem();
+    _loadItemImages();
   }
 
-  Future<void> _fetchItem() async {
-    ItemModel item = await getItem(widget.itemId);
+  Future<void> _loadItemImages() async {
+    try {
+      List<String> itemImages = await _getItemImages(widget.itemId);
+      for (String imageUrl in itemImages) {
+        String fileName = imageUrl.split('/').last;
+        Directory appDir = await getApplicationDocumentsDirectory();
+        String filePath = '${appDir.path}/$fileName';
+
+        try {
+          File file = File(filePath);
+          if (!file.existsSync()) {
+            firebase_storage.Reference ref =
+                firebase_storage.FirebaseStorage.instance.refFromURL(imageUrl);
+            await ref.writeToFile(file);
+          }
+          setState(() {
+            _imagePaths.add(filePath);
+          });
+        } catch (e) {
+          // Lidar com erros ao fazer o download das imagens
+          print('Erro ao fazer o download da imagem: $e');
+        }
+      }
+    } catch (e) {
+      // Lidar com erros ao carregar as imagens do Firestore
+      print('Erro ao carregar imagens: $e');
+    }
+  }
+
+  Future<void> _pickImages() async {
+    final picker = ImagePicker();
+    final pickedFiles = await picker.pickMultiImage();
+
+    if (pickedFiles != null) {
+      setState(() {
+        _imagePaths
+            .addAll(pickedFiles.map((pickedFile) => pickedFile.path).toList());
+      });
+    }
+  }
+
+  Future<void> _uploadImages() async {
     setState(() {
-      _item = item;
+      _uploading = true; // Indicar que o envio está em andamento
     });
+
+    for (String imagePath in _imagePaths) {
+      try {
+        File file = File(imagePath);
+        String fileName = imagePath.split('/').last;
+        String ref = 'images/${widget.itemId}/$fileName';
+        await firebase_storage.FirebaseStorage.instance.ref(ref).putFile(file);
+      } on firebase_storage.FirebaseException catch (e) {
+        throw Exception('Erro no upload: ${e.code}');
+      }
+    }
+
+    setState(() {
+      _uploading = false; // Indicar que o envio foi concluído
+    });
+
+    Navigator.of(context).pop(); // Voltar à tela anterior
   }
 
-  Future<void> _copyToClipboard(String data) async {
-    await Clipboard.setData(ClipboardData(text: data));
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Dados copiados para a área de transferência')));
+  Future<List<String>> _getItemImages(String itemId) {
+    Future<List<String>> imageUrls = getItemImages(itemId);
+    return imageUrls;
+  }
+
+  void _openImageOverlay(BuildContext context, String imagePath) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Image.file(
+              File(imagePath),
+              fit: BoxFit.contain,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fechar o overlay
+              },
+              child: const Text('Fechar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_item == null) {
-      // exibe um indicador de carregamento enquanto os dados são buscados do Firebase
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    // converte os dados do item em uma string
-    String itemDetails = 'Nome: ${_item.name}\n'
-        'Modelo: ${_item.model}\n'
-        'Serial: ${_item.serial}\n'
-        'Categoria: ${_item.category}\n'
-        'Tipo: ${_item.type}\n'
-        'Conservação: ${_item.conservation}\n'
-        'Nota fiscal: ${_item.nfe}\n'
-        'Data de emissão da NFe: ${_item.nfeDate}\n'
-        'ID: ${_item.id}';
-
-    // converte os dados do item em uma string (Função com responsável e dados da NFe)
-    /*String itemDetails = 'Nome: ${_item.name}\n'
-        'Modelo: ${_item.model}\n'
-        'Serial: ${_item.serial}\n'
-        'Categoria: ${_item.category}\n'
-        'Tipo: ${_item.type}\n'
-        'Conservação: ${_item.conservation}\n'
-        'Nota fiscal: ${_item.nfe}\n'
-        'Data de emissão da NFe: ${_item.nfeDate}\n'
-        'Responsável: ${_item.responsibleName}';*/
-
-    // exibe os dados do item e um botão para copiar para a área de transferência
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes do Item'),
+        title: const Text('Selecionar Imagens'),
+        backgroundColor: CustomColor.customBlue, // Cor de fundo da app bar
+        actions: [
+          IconButton(
+            onPressed: _uploadImages,
+            icon: const Icon(Icons.save), // Ícone de salvar
+          ),
+        ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: [
-                Text('Nome: ${_item.name}'),
-                Text('Modelo: ${_item.model}'),
-                Text('Serial: ${_item.serial}'),
-                Text('Categoria: ${_item.category}'),
-                Text('Tipo: ${_item.type}'),
-                Text('Conservação: ${_item.conservation}'),
-                Text('Nota fiscal: ${_item.nfe}'),
-                Text('Data de emissão da NFe: ${_item.nfeDate}'),
-                Text('Responsável: ${_item.responsibleName}'),
-                const SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.image_search_rounded),
-                      onPressed: () => pickAndUploadImage(widget.itemId),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.camera_enhance_rounded),
-                      onPressed: () => pickAndUploadImage(widget.itemId),
-                    ),
-                  ],
+          const SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: _pickImages,
+            style: ElevatedButton.styleFrom(
+              primary: CustomColor.customBlue, // Cor de fundo do botão
+              onPrimary: Colors.white, // Cor do texto do botão
+            ),
+            child: const Text('Escolher Imagens'),
+          ),
+          const SizedBox(height: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Container(
+              height: 300,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // Número de colunas
+                  crossAxisSpacing:
+                      8.0, // Espaçamento horizontal entre as células
+                  mainAxisSpacing: 8.0, // Espaçamento vertical entre as células
                 ),
-              ],
+                itemCount: _imagePaths.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      _openImageOverlay(context, _imagePaths[index]);
+                    },
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.file(
+                            File(_imagePaths[index]),
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: Icon(Icons.close, color: Colors.white),
+                            onPressed: () {
+                              setState(() {
+                                _imagePaths.removeAt(
+                                    index); // Excluir a imagem da lista
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
+          if (_uploading) // Exibir indicador de status durante o envio
+            CircularProgressIndicator()
+          else // Exibir botão de envio
+            ElevatedButton(
+              onPressed: _uploadImages,
+              style: ElevatedButton.styleFrom(
+                primary: CustomColor.customBlue, // Cor de fundo do botão
+                onPrimary: Colors.white, // Cor do texto do botão
+              ),
+              child: const Text('Enviar Imagens'),
+            ),
         ],
       ),
     );
