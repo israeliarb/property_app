@@ -44,6 +44,7 @@ class _RegisterPageState extends State<UserRegisterPage> {
     return Scaffold(
       backgroundColor: CustomColor.customBlack,
       appBar: AppBar(
+        backgroundColor: CustomColor.customBlue,
         title: const Text('Cadastro de usuários'),
       ),
       body: SafeArea(
@@ -248,11 +249,10 @@ class _RegisterPageState extends State<UserRegisterPage> {
               const SizedBox(height: SpacingSizes.md_16),
 
               //Save button
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: CustomSizes.size_45),
-                child: GestureDetector(
-                  onTap: () {
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () {
                     if ((_nameController.text.trim() != "") &&
                         (_emailController.text.trim() != "") &&
                         (_passwordController != "") &&
@@ -269,7 +269,12 @@ class _RegisterPageState extends State<UserRegisterPage> {
                         _departmentController.text.trim(),
                         _isAdmin,
                       );
-                      Navigator.popUntil(context, ModalRoute.withName('/'));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (contex) {
+                          return const MainPage();
+                        }),
+                      );
                     } else {
                       showDialog(
                         context: context,
@@ -300,21 +305,16 @@ class _RegisterPageState extends State<UserRegisterPage> {
                       );
                     }
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(CustomSizes.size_15),
-                    decoration: BoxDecoration(
-                        color: CustomColor.customBlue,
-                        borderRadius:
-                            BorderRadius.circular(CustomBorderRadius.md_12)),
-                    child: const Center(
-                      child: Text(
-                        'Salvar',
-                        style: TextStyle(
-                          color: CustomColor.customWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: FontSize.md,
-                        ),
-                      ),
+                  style: ElevatedButton.styleFrom(
+                    primary: CustomColor.customBlue,
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text(
+                    'Salvar',
+                    style: TextStyle(
+                      color: CustomColor.customWhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: FontSize.md,
                     ),
                   ),
                 ),
@@ -323,11 +323,10 @@ class _RegisterPageState extends State<UserRegisterPage> {
               const SizedBox(height: SpacingSizes.md_16),
 
               //Cancel button
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: CustomSizes.size_45),
-                child: GestureDetector(
-                  onTap: () {
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (contex) {
@@ -335,20 +334,17 @@ class _RegisterPageState extends State<UserRegisterPage> {
                       }),
                     );
                   },
-                  child: Container(
-                    padding: const EdgeInsets.all(CustomSizes.size_15),
-                    decoration: BoxDecoration(
-                        color: CustomColor.customRed,
-                        borderRadius:
-                            BorderRadius.circular(CustomBorderRadius.md_12)),
-                    child: const Center(
-                      child: Text(
-                        'Cancelar',
-                        style: TextStyle(
-                          color: CustomColor.customWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: FontSize.md,
-                        ),
+                  style: ElevatedButton.styleFrom(
+                    primary: CustomColor.customRed,
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        color: CustomColor.customWhite,
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.md,
                       ),
                     ),
                   ),

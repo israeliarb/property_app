@@ -22,6 +22,7 @@ class ItemListPage extends StatefulWidget {
 
 class _ItemListPageState extends State<ItemListPage> {
   String? selectedItem;
+  String searchText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class _ItemListPageState extends State<ItemListPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(height: SpacingSizes.l_32),
               Padding(
                 padding: const EdgeInsets.only(
                     left: SpacingSizes.l_32, right: SpacingSizes.l_32),
@@ -51,28 +53,53 @@ class _ItemListPageState extends State<ItemListPage> {
                     borderRadius:
                         BorderRadius.circular(CustomBorderRadius.md_12),
                   ),
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('itens')
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (!snapshot.hasData ||
-                          snapshot.data!.docs.isEmpty) {
-                        return Center(
-                          child: Text('Nenhum item cadastrado.'),
-                        );
-                      } else {
-                        return SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Column(
-                                children: snapshot.data!.docs.map((document) {
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              searchText = value
+                                  .toLowerCase(); // Converter para minúsculas para uma comparação de busca insensível a maiúsculas/minúsculas
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Pesquisar',
+                            prefixIcon: Icon(Icons.search),
+                          ),
+                        ),
+                      ),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('itens')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return Center(
+                              child: Text('Nenhum item cadastrado.'),
+                            );
+                          } else {
+                            final filteredItems = snapshot.data!.docs.where(
+                                (document) =>
+                                    document['name']
+                                        .toLowerCase()
+                                        .contains(searchText) ||
+                                    document['responsibleName']
+                                        .toLowerCase()
+                                        .contains(searchText));
+
+                            return SingleChildScrollView(
+                              child: Column(
+                                children: filteredItems.map((document) {
                                   return SizedBox(
                                     height: CustomSizes.size_50,
                                     child: Padding(
@@ -98,11 +125,11 @@ class _ItemListPageState extends State<ItemListPage> {
                                   );
                                 }).toList(),
                               ),
-                            ],
-                          ),
-                        );
-                      }
-                    },
+                            );
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),

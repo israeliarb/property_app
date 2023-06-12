@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:property_app/constants/colors.dart';
+import 'package:property_app/constants/spacing_sizes.dart';
 import 'package:property_app/controllers/image_controller.dart';
 import 'package:property_app/main.dart';
 
@@ -18,8 +19,10 @@ class ItemImagesScreen extends StatefulWidget {
 }
 
 class _ItemImagesScreenState extends State<ItemImagesScreen> {
-  List<String> _imagePaths = [];
+  List<String> _uploadedImages = [];
+  List<String> _downloadedImages = [];
   bool _uploading = false;
+  bool? _deleteConfirmed;
 
   @override
   void initState() {
@@ -43,7 +46,7 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
             await ref.writeToFile(file);
           }
           setState(() {
-            _imagePaths.add(filePath);
+            _downloadedImages.add(filePath);
           });
         } catch (e) {
           // Lidar com erros ao fazer o download das imagens
@@ -62,7 +65,7 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
 
     if (pickedFiles != null) {
       setState(() {
-        _imagePaths
+        _uploadedImages
             .addAll(pickedFiles.map((pickedFile) => pickedFile.path).toList());
       });
     }
@@ -73,7 +76,8 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
       _uploading = true; // Indicar que o envio está em andamento
     });
 
-    for (String imagePath in _imagePaths) {
+    // Fazer upload das imagens selecionadas para upload
+    for (String imagePath in _uploadedImages) {
       try {
         File file = File(imagePath);
         String fileName = imagePath.split('/').last;
@@ -91,9 +95,83 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
     Navigator.of(context).pop(); // Voltar à tela anterior
   }
 
+  Future<bool> _checkImageExists(String ref) async {
+    try {
+      final storageRef = firebase_storage.FirebaseStorage.instance.ref(ref);
+      final result = await storageRef.getDownloadURL();
+      return true; // A imagem existe no Firestore
+    } catch (e) {
+      return false; // A imagem não existe no Firestore
+    }
+  }
+
   Future<List<String>> _getItemImages(String itemId) {
     Future<List<String>> imageUrls = getItemImages(itemId);
     return imageUrls;
+  }
+
+  Future<void> _deleteImage(String imagePath) async {
+    if (_uploadedImages.contains(imagePath)) {
+      setState(() {
+        _uploadedImages.remove(imagePath);
+      });
+    } else if (_downloadedImages.contains(imagePath)) {
+      setState(() {
+        _downloadedImages.remove(imagePath);
+      });
+    } else {
+      return; // Se o caminho da imagem não for encontrado, retornar sem excluir
+    }
+
+    final localFile = File(imagePath);
+    final firebaseStorage = firebase_storage.FirebaseStorage.instance;
+
+    try {
+      // Verificar se a imagem está armazenada localmente
+      if (await localFile.exists()) {
+        await localFile.delete();
+        print('Imagem local excluída com sucesso: $imagePath');
+      }
+    } catch (e) {
+      print('Erro ao excluir imagem local: $e');
+    }
+
+    try {
+      // Verificar se a imagem está armazenada no Firestore
+      if (_downloadedImages.contains(imagePath)) {
+        final ref = firebaseStorage.refFromURL(imagePath);
+        await ref.delete();
+        print('Imagem excluída do Firestore com sucesso: $imagePath');
+      }
+    } catch (e) {
+      print('Erro ao excluir imagem do Firestore: $e');
+    }
+  }
+
+  Future<bool?> _showDeleteConfirmationDialog() {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmação'),
+          content: const Text('Deseja excluir esta imagem?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Confirma a exclusão
+              },
+              child: const Text('Sim'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Cancela a exclusão
+              },
+              child: const Text('Não'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _openImageOverlay(BuildContext context, String imagePath) {
@@ -114,6 +192,17 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
                 Navigator.of(context).pop(); // Fechar o overlay
               },
               child: const Text('Fechar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                bool confirmed =
+                    (await _showDeleteConfirmationDialog()) as bool;
+                if (confirmed) {
+                  _deleteImage(imagePath);
+                  Navigator.of(context).pop(); // Fechar o overlay após excluir
+                }
+              },
+              child: const Text('Excluir'),
             ),
           ],
         );
@@ -158,53 +247,89 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
                       8.0, // Espaçamento horizontal entre as células
                   mainAxisSpacing: 8.0, // Espaçamento vertical entre as células
                 ),
-                itemCount: _imagePaths.length,
+                itemCount: _uploadedImages.length + _downloadedImages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      _openImageOverlay(context, _imagePaths[index]);
-                    },
-                    child: Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.file(
-                            File(_imagePaths[index]),
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.cover,
+                  if (index < _downloadedImages.length) {
+                    // Imagem carregada do Firestore
+                    return GestureDetector(
+                      onTap: () {
+                        _openImageOverlay(context, _downloadedImages[index]);
+                      },
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.file(
+                              File(_downloadedImages[index]),
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: IconButton(
-                            icon: Icon(Icons.close, color: Colors.white),
-                            onPressed: () {
-                              setState(() {
-                                _imagePaths.removeAt(
-                                    index); // Excluir a imagem da lista
-                              });
-                            },
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                              icon: Icon(Icons.close, color: Colors.white),
+                              onPressed: () async {
+                                bool confirmDelete =
+                                    await _showDeleteConfirmationDialog() ??
+                                        false;
+                                if (confirmDelete) {
+                                  await _deleteImage(_downloadedImages[index]);
+                                  setState(() {
+                                    _downloadedImages.removeAt(index);
+                                  });
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        ],
+                      ),
+                    );
+                  } else {
+                    // Imagem selecionada para upload
+                    int uploadIndex = index - _downloadedImages.length;
+                    return GestureDetector(
+                      onTap: () {
+                        _openImageOverlay(
+                            context, _uploadedImages[uploadIndex]);
+                      },
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.file(
+                              File(_uploadedImages[uploadIndex]),
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: IconButton(
+                              icon: Icon(Icons.close, color: Colors.white),
+                              onPressed: () async {
+                                bool confirmDelete =
+                                    await _showDeleteConfirmationDialog() ??
+                                        false;
+                                if (confirmDelete) {
+                                  await _deleteImage(_downloadedImages[index]);
+                                  setState(() {
+                                    _downloadedImages.removeAt(index);
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
               ),
             ),
           ),
-          if (_uploading) // Exibir indicador de status durante o envio
-            CircularProgressIndicator()
-          else // Exibir botão de envio
-            ElevatedButton(
-              onPressed: _uploadImages,
-              style: ElevatedButton.styleFrom(
-                primary: CustomColor.customBlue, // Cor de fundo do botão
-                onPrimary: Colors.white, // Cor do texto do botão
-              ),
-              child: const Text('Enviar Imagens'),
-            ),
         ],
       ),
     );
