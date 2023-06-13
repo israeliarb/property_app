@@ -73,3 +73,25 @@ Future<List<UserModel>> getUsers() async {
 
   return users;
 }
+
+Future<UserModel> getUser(String userId) async {
+  final DocumentSnapshot snapshot =
+      await db.collection('users').doc(userId).get();
+
+  if (snapshot.exists) {
+    final user = UserModel(
+      id: snapshot.id,
+      name: snapshot['name'],
+      email: snapshot['email'],
+      password: snapshot['password'],
+      registration: snapshot['registration'],
+      role: snapshot['role'],
+      department: snapshot['department'],
+      admin: snapshot['admin'],
+    );
+
+    return user;
+  } else {
+    throw Exception('Usuário não encontrado');
+  }
+}

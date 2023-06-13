@@ -296,6 +296,48 @@ class _ItemListPageState extends State<ItemListPage> {
                       style: TextStyle(fontSize: 18)),
                 ),
               ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (selectedItem == null) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Item não selecionado'),
+                            content: const Text(
+                                'Por favor, selecione um item antes de prosseguir.'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('Ok'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AssignPage(selectedItem: selectedItem!),
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: CustomColor.customBlue,
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text('Responsável do item',
+                      style: TextStyle(fontSize: 18)),
+                ),
+              ),
             ],
           ),
         ),

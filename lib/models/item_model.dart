@@ -8,7 +8,7 @@ class ItemModel {
   final String conservation;
   final String nfe;
   final String nfeDate;
-  final String responsibleId;
+  String responsibleId;
   String responsibleName;
   final String createdAt;
   final String updatedAt;

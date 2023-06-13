@@ -19,6 +19,7 @@ class AssignPage extends StatefulWidget {
 class _AssignPageState extends State<AssignPage> {
   late Future<ItemModel> _futureItem;
   List<UserModel> _users = [];
+  UserModel? _currentResponsible;
   final _selectedResponsible = TextEditingController();
 
   @override
@@ -35,11 +36,67 @@ class _AssignPageState extends State<AssignPage> {
     });
   }
 
+  Future<void> _checkCurrentResponsible(ItemModel item) async {
+    if (item.responsibleId != null) {
+      UserModel? responsible = await getUser(item.responsibleId);
+      setState(() {
+        _currentResponsible = responsible;
+      });
+    }
+  }
+
+  void _saveChanges(ItemModel item, UserModel selectedUser) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmar'),
+          content: Text(
+              'Deseja atribuir "${selectedUser.name}" como responsável pelo item?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Save the changes here
+                item.responsibleId = selectedUser.id;
+                item.responsibleName = selectedUser.name;
+                updateItem(
+                    item.id,
+                    item.name,
+                    item.model,
+                    item.serial,
+                    item.category,
+                    item.type,
+                    item.conservation,
+                    item.nfe,
+                    item.nfeDate,
+                    item.responsibleId,
+                    item.responsibleName,
+                    item.updatedAt,
+                    item.active);
+                setState(() {
+                  _currentResponsible = selectedUser;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Salvar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reponsável pelo Item'),
+        title: Text('Responsável pelo Item'),
       ),
       body: Center(
         child: FutureBuilder<ItemModel>(
@@ -53,6 +110,9 @@ class _AssignPageState extends State<AssignPage> {
               return Text('Nenhum dado encontrado');
             }
             final item = snapshot.data!;
+            if (_currentResponsible == null) {
+              _checkCurrentResponsible(item);
+            }
             return Column(
               children: [
                 const SizedBox(height: SpacingSizes.md_16),
@@ -71,7 +131,23 @@ class _AssignPageState extends State<AssignPage> {
                 ),
                 const SizedBox(height: SpacingSizes.md_16),
                 const Text(
-                  'Selecione o responsável abaixo',
+                  'Responsável atual:',
+                  style: TextStyle(
+                    fontSize: FontSize.md,
+                  ),
+                ),
+                Text(
+                  _currentResponsible != null
+                      ? 'Responsável: ${_currentResponsible!.name}'
+                      : 'Nenhum responsável atribuído',
+                  style: TextStyle(
+                    fontSize: FontSize.md,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: SpacingSizes.md_16),
+                const Text(
+                  'Selecione o novo responsável',
                   style: TextStyle(
                     fontSize: FontSize.md,
                   ),
@@ -92,13 +168,13 @@ class _AssignPageState extends State<AssignPage> {
                       ),
                     ),
                     child: DropdownButtonFormField<UserModel>(
-                      /*decoration: InputDecoration(
-                        labelText: 'Selecione o usuário',
-                      ),*/
-                      value: null,
+                      value: _currentResponsible,
                       onChanged: (UserModel? user) {
                         // Faça algo com o usuário selecionado
                         print(user?.name);
+                        if (user != null && user != _currentResponsible) {
+                          _saveChanges(item, user);
+                        }
                       },
                       items: _users.map((UserModel user) {
                         return DropdownMenuItem<UserModel>(
