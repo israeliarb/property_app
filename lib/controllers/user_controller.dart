@@ -95,3 +95,24 @@ Future<UserModel> getUser(String userId) async {
     throw Exception('Usuário não encontrado');
   }
 }
+
+void updateUser(
+  String userId,
+  String name,
+  String email,
+  String password,
+  String registration,
+  String role,
+  String department,
+  bool admin,
+) async {
+  await FirebaseFirestore.instance.collection('users').doc(userId).update({
+    'name': name,
+    'email': email,
+    'password': password,
+    'registration': registration,
+    'role': role,
+    'department': department,
+    'active': admin,
+  });
+}

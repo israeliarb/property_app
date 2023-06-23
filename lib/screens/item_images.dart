@@ -115,36 +115,25 @@ class _ItemImagesScreenState extends State<ItemImagesScreen> {
       setState(() {
         _uploadedImages.remove(imagePath);
       });
-    } else if (_downloadedImages.contains(imagePath)) {
-      setState(() {
-        _downloadedImages.remove(imagePath);
-      });
-    } else {
-      return; // Se o caminho da imagem não for encontrado, retornar sem excluir
     }
 
-    final localFile = File(imagePath);
-    final firebaseStorage = firebase_storage.FirebaseStorage.instance;
-
-    try {
-      // Verificar se a imagem está armazenada localmente
-      if (await localFile.exists()) {
-        await localFile.delete();
+    if (imagePath.startsWith('file:')) {
+      try {
+        final file = File(imagePath);
+        await file.delete();
         print('Imagem local excluída com sucesso: $imagePath');
+      } catch (e) {
+        print('Erro ao excluir imagem local: $e');
       }
-    } catch (e) {
-      print('Erro ao excluir imagem local: $e');
-    }
-
-    try {
-      // Verificar se a imagem está armazenada no Firestore
-      if (_downloadedImages.contains(imagePath)) {
-        final ref = firebaseStorage.refFromURL(imagePath);
-        await ref.delete();
+    } else {
+      try {
+        final storageRef =
+            firebase_storage.FirebaseStorage.instance.refFromURL(imagePath);
+        await storageRef.delete();
         print('Imagem excluída do Firestore com sucesso: $imagePath');
+      } catch (e) {
+        print('Erro ao excluir imagem do Firestore: $e');
       }
-    } catch (e) {
-      print('Erro ao excluir imagem do Firestore: $e');
     }
   }
 

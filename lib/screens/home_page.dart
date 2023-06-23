@@ -4,6 +4,7 @@ import 'package:property_app/auth/main_page.dart';
 import 'package:property_app/constants/colors.dart';
 import 'package:property_app/screens/item_insert_page.dart';
 import 'package:property_app/screens/item_list_page.dart';
+import 'package:property_app/screens/user_list_page.dart';
 import 'package:property_app/screens/user_register_page.dart';
 import 'package:property_app/screens/item_list_page.dart' show ItemListPage;
 
@@ -59,6 +60,25 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: const Text('Usuário', style: TextStyle(fontSize: 18)),
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UserListPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: CustomColor.customBlue,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('Lista de Usuários',
+                    style: TextStyle(fontSize: 18)),
               ),
             ),
             SizedBox(height: 16),

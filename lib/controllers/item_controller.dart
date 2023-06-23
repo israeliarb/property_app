@@ -104,20 +104,21 @@ Future<ItemModel> getItem(String itemId) async {
       await FirebaseFirestore.instance.collection('itens').doc(itemId).get();
 
   ItemModel item = ItemModel(
-      id: itemId,
-      name: snapshot['name'],
-      model: snapshot['model'],
-      serial: snapshot['serial'],
-      category: snapshot['category'],
-      type: snapshot['type'],
-      conservation: snapshot['conservation'],
-      nfe: snapshot['nfe'],
-      nfeDate: snapshot['nfeDate'],
-      responsibleId: snapshot['responsibleId'],
-      responsibleName: snapshot['responsibleName'],
-      createdAt: snapshot['createdAt'],
-      updatedAt: snapshot['updatedAt'],
-      active: snapshot['active']);
+    id: itemId,
+    name: snapshot['name'],
+    model: snapshot['model'],
+    serial: snapshot['serial'],
+    category: snapshot['category'],
+    type: snapshot['type'],
+    conservation: snapshot['conservation'],
+    nfe: snapshot['nfe'],
+    nfeDate: snapshot['nfeDate'],
+    responsibleId: snapshot['responsibleId'],
+    responsibleName: snapshot['responsibleName'],
+    createdAt: snapshot['createdAt'],
+    updatedAt: snapshot['updatedAt'],
+    active: snapshot['active'],
+  );
 
   return item;
 }
@@ -194,4 +195,36 @@ Future<void> uploadImage(XFile image) async {
   } on FirebaseException catch (e) {
     throw Exception('Erro no upload: ${e.code}');
   }
+}
+
+Future<List<ItemModel>> getItemsByUserId(String userId) async {
+  final QuerySnapshot snapshot = await db
+      .collection('items')
+      .where('responsibleID', isEqualTo: userId)
+      .get();
+
+  final List<ItemModel> items = [];
+
+  for (var doc in snapshot.docs) {
+    items.add(
+      ItemModel(
+        id: doc.id,
+        name: doc['name'],
+        model: doc['model'],
+        serial: doc['serial'],
+        category: doc['category'],
+        type: doc['type'],
+        conservation: doc['conservation'],
+        nfe: doc['nfe'],
+        nfeDate: doc['nfeDate'],
+        responsibleId: doc['responsibleId'],
+        responsibleName: doc['responsibleName'],
+        createdAt: doc['createdAt'],
+        updatedAt: doc['updatedAt'],
+        active: doc['active'],
+      ),
+    );
+  }
+
+  return items;
 }

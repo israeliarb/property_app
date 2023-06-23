@@ -62,7 +62,6 @@ class _AssignPageState extends State<AssignPage> {
             ),
             TextButton(
               onPressed: () {
-                // Save the changes here
                 item.responsibleId = selectedUser.id;
                 item.responsibleName = selectedUser.name;
                 updateItem(
