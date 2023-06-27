@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: CustomColor.customBlue,
                   padding: EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('UsuÃ¡rio', style: TextStyle(fontSize: 18)),
+                child: const Text('Usuário', style: TextStyle(fontSize: 18)),
               ),
             ),
             SizedBox(height: 16),

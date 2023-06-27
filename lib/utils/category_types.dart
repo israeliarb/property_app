@@ -52,7 +52,9 @@ final Map<String, List<String>> categoryToTypes = {
     'Leitor biométrico',
     'Servidor',
     'Router Board',
-    'Aparelho de registro de ponto'
+    'Aparelho de registro de ponto',
+    'Unifi Ubiquiti',
+    'Fonte Ubiquiti'
   ],
   'Bens de pequeno valor': [
     'Mouse',
