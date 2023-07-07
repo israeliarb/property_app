@@ -19,28 +19,44 @@ class AssignPage extends StatefulWidget {
 class _AssignPageState extends State<AssignPage> {
   late Future<ItemModel> _futureItem;
   List<UserModel> _users = [];
-  UserModel? _currentResponsible;
+  String? _currentResponsibleName;
   final _selectedResponsible = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
     _futureItem = getItem(widget.selectedItem);
     _fetchUsers();
+    _getCurrentResponsible();
   }
 
   Future<void> _fetchUsers() async {
     List<UserModel> users = await getUsers();
+    if (_currentResponsibleName != null &&
+        !_users.any((user) => user.name == _currentResponsibleName)) {
+      setState(() {
+        _currentResponsibleName = null;
+      });
+    }
     setState(() {
       _users = users;
     });
   }
 
-  Future<void> _checkCurrentResponsible(ItemModel item) async {
+  Future<void> _getCurrentResponsible() async {
+    ItemModel item = await _futureItem;
     if (item.responsibleId != null) {
       UserModel? responsible = await getUser(item.responsibleId);
       setState(() {
-        _currentResponsible = responsible;
+        _currentResponsibleName = responsible.name;
+      });
+    } else {
+      setState(() {
+        _currentResponsibleName = null;
       });
     }
   }
@@ -65,21 +81,22 @@ class _AssignPageState extends State<AssignPage> {
                 item.responsibleId = selectedUser.id;
                 item.responsibleName = selectedUser.name;
                 updateItem(
-                    item.id,
-                    item.name,
-                    item.model,
-                    item.serial,
-                    item.category,
-                    item.type,
-                    item.conservation,
-                    item.nfe,
-                    item.nfeDate,
-                    item.responsibleId,
-                    item.responsibleName,
-                    item.updatedAt,
-                    item.active);
+                  item.id,
+                  item.name,
+                  item.model,
+                  item.serial,
+                  item.category,
+                  item.type,
+                  item.conservation,
+                  item.nfe,
+                  item.nfeDate,
+                  item.responsibleId,
+                  item.responsibleName,
+                  item.updatedAt,
+                  item.active,
+                );
                 setState(() {
-                  _currentResponsible = selectedUser;
+                  _currentResponsibleName = selectedUser.name;
                 });
                 Navigator.of(context).pop();
               },
@@ -109,9 +126,6 @@ class _AssignPageState extends State<AssignPage> {
               return Text('Nenhum dado encontrado');
             }
             final item = snapshot.data!;
-            if (_currentResponsible == null) {
-              _checkCurrentResponsible(item);
-            }
             return Column(
               children: [
                 const SizedBox(height: SpacingSizes.md_16),
@@ -136,8 +150,8 @@ class _AssignPageState extends State<AssignPage> {
                   ),
                 ),
                 Text(
-                  _currentResponsible != null
-                      ? 'Responsável: ${_currentResponsible!.name}'
+                  _currentResponsibleName != null
+                      ? 'Responsável: $_currentResponsibleName'
                       : 'Nenhum responsável atribuído',
                   style: TextStyle(
                     fontSize: FontSize.md,
@@ -166,18 +180,29 @@ class _AssignPageState extends State<AssignPage> {
                             BorderRadius.circular(CustomBorderRadius.md_12),
                       ),
                     ),
-                    child: DropdownButtonFormField<UserModel>(
-                      value: _currentResponsible,
-                      onChanged: (UserModel? user) {
-                        // Faça algo com o usuário selecionado
-                        print(user?.name);
-                        if (user != null && user != _currentResponsible) {
-                          _saveChanges(item, user);
+                    child: DropdownButtonFormField<String>(
+                      value: _currentResponsibleName,
+                      onChanged: (String? userName) {
+                        if (userName != null &&
+                            userName != _currentResponsibleName) {
+                          UserModel selectedUser = _users.firstWhere(
+                            (user) => user.name == userName,
+                            orElse: () => UserModel(
+                                admin: false,
+                                department: '',
+                                email: '',
+                                id: '',
+                                name: '',
+                                password: '',
+                                registration: '',
+                                role: ''),
+                          );
+                          _saveChanges(item, selectedUser);
                         }
                       },
                       items: _users.map((UserModel user) {
-                        return DropdownMenuItem<UserModel>(
-                          value: user,
+                        return DropdownMenuItem<String>(
+                          value: user.name,
                           child: Text(user.name),
                         );
                       }).toList(),

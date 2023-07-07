@@ -6,7 +6,6 @@ import 'package:property_app/constants/custom_border_radius.dart';
 import 'package:property_app/constants/custom_sizes.dart';
 import 'package:property_app/controllers/item_controller.dart';
 import 'package:property_app/services/screeSize.dart';
-import 'package:image_picker/image_picker.dart';
 
 File? imageFile;
 
@@ -84,7 +83,7 @@ void showOverlay(BuildContext context) async {
       ),
     );
   });
-  overlayState?.insertAll([overlay]);
+  overlayState.insertAll([overlay]);
 }
 
 class imageWidget extends StatefulWidget {
